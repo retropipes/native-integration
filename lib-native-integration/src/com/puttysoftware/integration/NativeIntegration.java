@@ -31,6 +31,9 @@ public class NativeIntegration {
     // Fields
     private final Desktop desktop;
     private final boolean supported;
+    private final boolean macOS;
+    private final boolean windows;
+    private final boolean otherOS;
 
     // Constructor
     public NativeIntegration() {
@@ -40,6 +43,32 @@ public class NativeIntegration {
         } else {
             this.desktop = null;
         }
+        String osName = System.getProperty("os.name");
+        if ("Mac OS X".equals(osName)) {
+            this.macOS = true;
+            this.windows = false;
+            this.otherOS = false;
+        } else if (osName.startsWith("Windows")) {
+            this.macOS = false;
+            this.windows = true;
+            this.otherOS = false;
+        } else {
+            this.macOS = false;
+            this.windows = false;
+            this.otherOS = true;
+        }
+    }
+
+    public final boolean isMacOS() {
+        return this.macOS;
+    }
+
+    public final boolean isWindows() {
+        return this.windows;
+    }
+
+    public final boolean isOtherOS() {
+        return this.otherOS;
     }
 
     public void addAppForegroundListener(final AppForegroundListener listener) {
@@ -111,9 +140,8 @@ public class NativeIntegration {
 
     // Methods
     public void configureLookAndFeel() {
-        String osName = System.getProperty("os.name");
-        if (osName.contains("OS X")) {
-            // OS X-specific stuff
+        if (this.macOS) {
+            // macOS-specific stuff
             try {
                 // Tell the UIManager to use the native look and feel
                 UIManager.setLookAndFeel(
@@ -121,7 +149,7 @@ public class NativeIntegration {
             } catch (final Exception e) {
                 // Do nothing
             }
-        } else if (osName.contains("Windows")) {
+        } else if (this.windows) {
             // Windows-specific stuff
             try {
                 // Tell the UIManager to use the native look and feel
