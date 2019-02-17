@@ -43,12 +43,12 @@ public class NativeIntegration {
         } else {
             this.desktop = null;
         }
-        String osName = System.getProperty("os.name");
-        if ("Mac OS X".equals(osName)) {
+        String osName = System.getProperty("os.name"); //$NON-NLS-1$
+        if ("Mac OS X".equals(osName)) { //$NON-NLS-1$
             this.macOS = true;
             this.windows = false;
             this.otherOS = false;
-        } else if (osName.startsWith("Windows")) {
+        } else if (osName.startsWith("Windows")) { //$NON-NLS-1$
             this.macOS = false;
             this.windows = true;
             this.otherOS = false;
