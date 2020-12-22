@@ -1,4 +1,4 @@
-# lib-java-native-integration
+# Native Integration
 
 Java class library providing operating system integration for Swing programs.
 
